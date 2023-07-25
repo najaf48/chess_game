@@ -38,7 +38,7 @@ class SpriteSheet:
         return cropped
 
 
-    def images_at(self,widthofsheet:int,heightofsheet:int,num_img_x:int,num_img_y:int):
+    def images_at(self,widthofsheet=2000,heightofsheet=668,num_img_x=6,num_img_y=2):
         height_reduced=heightofsheet/num_img_y
         width_reduced=widthofsheet/num_img_x
         rects=[]
