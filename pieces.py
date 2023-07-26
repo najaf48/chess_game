@@ -23,8 +23,9 @@ class Piece:
         """Draw the piece at its current location."""
         # self.rect = self.image.get_rect()
         # self.rect.topleft = self.x, self.y
-        self.rect=(self.x,self.y)
-        self.screen.blit(self.image, self.rect)
+        # self.rect=(self.x,self.y)
+        for location in self.locations:
+            self.screen.blit(self.image,tuple(location))
     def loacteme(self,location):
         self.x=location[0]
         self.y=location[1]

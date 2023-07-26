@@ -17,6 +17,7 @@ class ChessGame:  #overall class to manage chess game behaviour
         while True:
             self._check_events()
             self._update_screen()
+
     def _check_events(self):
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
@@ -24,23 +25,30 @@ class ChessGame:  #overall class to manage chess game behaviour
             elif event.type==pygame.KEYDOWN:
                 if event.key == pygame.K_q:
                     sys.exit()
+
     def draw_chess_board(self):
-        start_fen='kqpppppp/ppp/PP'
         self.chess_board = Board()
         self.chess_board.drawBoard(self.screen)
+        self.images()
         self.pieces_set()
-        self.chess_board.fen_notation(start_fen,self.pieces.list_set)
-        print(self.pieces.list_set[6].y)
+        self.update_location_of_pieces('rnbkqbnr/pppppppp/////PPPPPPPP/RNBKQBNR')
+        self.pieces.drawPieces()
+        self._update_screen()
 
     def _update_screen(self):
         pygame.display.flip()
+
     def images(self):
         sprite = SpriteSheet('Pieces.png')
         self.images_set = sprite.images_at()
+
     def pieces_set(self):
-        self.images()
-        self.pieces = pieces_set(self.images_set,self)
-        self.pieces.create_set()
+        self.pieces = pieces_set(self)
+        self.pieces.create_set(self.images_set)
+
+    def update_location_of_pieces(self,notation):
+        self.chess_board.fen_notation(notation,self.pieces)
+
 if __name__ == '__main__':
     chess_game = ChessGame()
     chess_game.run_game()

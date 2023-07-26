@@ -35,7 +35,8 @@ class SpriteSheet:
         #     image.set_colorkey(colorkey, pygame.RLEACCEL)
         # return image
         cropped = self.sheet.subsurface(rectangle)
-        return cropped
+        scaled = pygame.transform.scale(cropped,(75,75))
+        return scaled
 
 
     def images_at(self,widthofsheet=2000,heightofsheet=668,num_img_x=6,num_img_y=2):
