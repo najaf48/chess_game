@@ -8,6 +8,11 @@ class ChessGame:  #overall class to manage chess game behaviour
     def __init__(self):
         """Initialize the game, and create resources."""
         pygame.init()
+        pygame.mixer.music.load('audios/bg.mp3')
+        pygame.mixer.music.play(-1)
+        pygame.mixer.music.set_volume(0.2)
+        self.move = pygame.mixer.Sound('audios/move-self.mp3')
+        self.capture = pygame.mixer.Sound('audios/capture.mp3')
         self.settings=Settings()
         self.screen = pygame.display.set_mode((self.settings.screen_width,self.settings.screen_height))
         self.fen_notation = 'rnbkqbnr/pppppppp/////PPPPPPPP/RNBKQBNR'
@@ -35,12 +40,15 @@ class ChessGame:  #overall class to manage chess game behaviour
                         x=(int(x/75))*75
                         y=(int(y/75))*75
                         colliding_piece = self.pieces.check_collide([x,y])
-                        colliding_piece.locations.remove([x,y])
+                        if colliding_piece!=None:
+                            colliding_piece.locations.remove([x,y])
+                            self.capture.play()
+                        else:
+                            self.move.play()
                         self.selected_piece.locations.append([x,y])
                         self.selected_piece.locations.remove(self.cord)
-                        print(self.selected_piece.locations)
                         self.selected_piece=None
-                        break
+                        
                     elif self.selected_piece==None:
                         x=event.pos[0]
                         y=event.pos[1]
@@ -48,7 +56,6 @@ class ChessGame:  #overall class to manage chess game behaviour
                         y=(int(y/75))*75
                         self.cord=[x,y]
                         self.selected_piece = self.pieces.check_collide(self.cord)
-                        print(self.selected_piece)
 
     def draw_chess_board(self):
         self.chess_board = Board()
