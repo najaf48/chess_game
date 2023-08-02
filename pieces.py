@@ -26,6 +26,3 @@ class Piece:
         # self.rect=(self.x,self.y)
         for location in self.locations:
             self.screen.blit(self.image,tuple(location))
-    def loacteme(self,location):
-        self.x=location[0]
-        self.y=location[1]

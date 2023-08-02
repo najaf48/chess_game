@@ -21,3 +21,10 @@ class pieces_set:
     def drawPieces(self):
         for piece in self.list_pieces_objects:
             piece.blitme()
+    
+    def check_collide(self,cord):
+        for piece in self.list_pieces_objects:
+            for position in piece.locations:
+                if position == cord:
+                    return piece
+        return None

@@ -10,6 +10,8 @@ class ChessGame:  #overall class to manage chess game behaviour
         pygame.init()
         self.settings=Settings()
         self.screen = pygame.display.set_mode((self.settings.screen_width,self.settings.screen_height))
+        self.fen_notation = 'rnbkqbnr/pppppppp/////PPPPPPPP/RNBKQBNR'
+        self.selected_piece = None
         pygame.display.set_caption('Chess')
     def run_game(self):
         """Start the main loop for the game."""
@@ -25,17 +27,40 @@ class ChessGame:  #overall class to manage chess game behaviour
             elif event.type==pygame.KEYDOWN:
                 if event.key == pygame.K_q:
                     sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    if self.selected_piece!=None:
+                        x=event.pos[0]
+                        y=event.pos[1]
+                        x=(int(x/75))*75
+                        y=(int(y/75))*75
+                        colliding_piece = self.pieces.check_collide([x,y])
+                        colliding_piece.locations.remove([x,y])
+                        self.selected_piece.locations.append([x,y])
+                        self.selected_piece.locations.remove(self.cord)
+                        print(self.selected_piece.locations)
+                        self.selected_piece=None
+                        break
+                    elif self.selected_piece==None:
+                        x=event.pos[0]
+                        y=event.pos[1]
+                        x=(int(x/75))*75
+                        y=(int(y/75))*75
+                        self.cord=[x,y]
+                        self.selected_piece = self.pieces.check_collide(self.cord)
+                        print(self.selected_piece)
 
     def draw_chess_board(self):
         self.chess_board = Board()
         self.chess_board.drawBoard(self.screen)
         self.images()
         self.pieces_set()
-        self.update_location_of_pieces('rnbkqbnr/pppppppp/////PPPPPPPP/RNBKQBNR')
-        self.pieces.drawPieces()
+        self.update_location_of_pieces(self.fen_notation)
         self._update_screen()
 
     def _update_screen(self):
+        self.chess_board.drawBoard(self.screen)
+        self.pieces.drawPieces()
         pygame.display.flip()
 
     def images(self):
