@@ -3,21 +3,19 @@ from settings import Settings
 from spritesheet import SpriteSheet
 from pieces_creation import pieces_set
 from board import Board
+import sounds
 
 class ChessGame:  #overall class to manage chess game behaviour
     def __init__(self):
         """Initialize the game, and create resources."""
         pygame.init()
-        pygame.mixer.music.load('audios/bg.mp3')
-        pygame.mixer.music.play(-1)
-        pygame.mixer.music.set_volume(0.2)
-        self.move = pygame.mixer.Sound('audios/move-self.mp3')
-        self.capture = pygame.mixer.Sound('audios/capture.mp3')
+        sounds.playbg()
         self.settings=Settings()
         self.screen = pygame.display.set_mode((self.settings.screen_width,self.settings.screen_height))
         self.fen_notation = 'rnbkqbnr/pppppppp/////PPPPPPPP/RNBKQBNR'
         self.selected_piece = None
         pygame.display.set_caption('Chess')
+
     def run_game(self):
         """Start the main loop for the game."""
         self.draw_chess_board()
@@ -42,14 +40,14 @@ class ChessGame:  #overall class to manage chess game behaviour
                         colliding_piece = self.pieces.check_collide([x,y])
                         if colliding_piece!=None:
                             colliding_piece.locations.remove([x,y])
-                            self.capture.play()
+                            sounds.capture()
                         else:
-                            self.move.play()
+                            sounds.move()
                         self.selected_piece.locations.append([x,y])
                         self.selected_piece.locations.remove(self.cord)
-                        self.selected_piece=None
+                        self.selected_piece = None
                         
-                    elif self.selected_piece==None:
+                    elif self.selected_piece == None:
                         x=event.pos[0]
                         y=event.pos[1]
                         x=(int(x/75))*75
