@@ -1,12 +1,20 @@
 import pygame
-from settings import Settings
+
 class Board:
-    def __init__(self):
-        setting=Settings()
-        width = setting.screen_width
-        height = setting.screen_width
+    def __init__(self,screen):
+        self.screen=screen
+        self.board_representation = [[0,0,0,0,0,0,0,0],
+                                     [0,0,0,0,0,0,0,0],
+                                     [0,0,0,0,0,0,0,0],
+                                     [0,0,0,0,0,0,0,0],
+                                     [0,0,0,0,0,0,0,0],
+                                     [0,0,0,0,0,0,0,0],
+                                     [0,0,0,0,0,0,0,0],
+                                     [0,0,0,0,0,0,0,0]]
         self.cordinates()
-    def drawBoard(self,screen):
+        # print(self.cord)
+
+    def drawBoard(self):
         white = (255, 255, 255)
         green = (50, 168, 82)
         x=0
@@ -15,12 +23,12 @@ class Board:
             for j in range(8):
                 g=((i+j)%2 == 0)
                 squarecolor = white if g else green
-                pygame.draw.rect(screen, squarecolor,(x, y, 75, 75))
+                pygame.draw.rect(self.screen, squarecolor,(x, y, 75, 75))
                 x+=75
             x=0
             y+=75
     def cordinates(self):
-        self.cord = {1:[0,0]}
+        self.cord = {}
         x=0
         y=0
         for i in range(1,65):
@@ -29,38 +37,7 @@ class Board:
             if i%8==0:
                 x=0
                 y+=75
-    # def fen_notation(self,notation,pieceSet):
-    #     x=0
-    #     y=0
-    #     for n in notation:
-    #         if n=='k':
-    #             pieceSet.king.locations.append([x,y])
-    #         if n=='q':
-    #             pieceSet.queen.locations.append([x,y])
-    #         if n=='b':
-    #             pieceSet.bishop.locations.append([x,y])
-    #         if n=='n':
-    #             pieceSet.knight.locations.append([x,y])
-    #         if n=='r':
-    #             pieceSet.rook.locations.append([x,y])
-    #         if n=='p':
-    #             pieceSet.pawn.locations.append([x,y])
-    #         if n=='K':
-    #             pieceSet.KING.locations.append([x,y])
-    #         if n=='Q':
-    #             pieceSet.QUEEN.locations.append([x,y])
-    #         if n=='B':
-    #             pieceSet.BISHOP.locations.append([x,y])
-    #         if n=='N':
-    #             pieceSet.KNIGHT.locations.append([x,y])
-    #         if n=='R':
-    #             pieceSet.ROOK.locations.append([x,y])
-    #         if n=='P':
-    #             pieceSet.PAWN.locations.append([x,y])
-    #         x+=75
-    #         if n=='/':
-    #             x=0
-    #             y+=75
+
     def fen_notation(self,notation,pieceSet):
         x=0
         y=0
@@ -99,3 +76,21 @@ class Board:
             if n=='/':
                 x=0
                 y+=75
+
+    def selected_highlight(self,cord):
+        pygame.draw.rect(self.screen, (118, 118, 26),(cord[0], cord[1], 75, 75))
+
+    def update_board_representation(self,list_of_pieces_objects):
+        for i in range(8):
+            for j in range(8):
+                self.board_representation[i][j]=0
+        for piece in list_of_pieces_objects:
+            for location in piece.locations:
+                if piece.name=='p':
+                    print(location)
+                x = location[0]
+                y = location[1]
+                x = int(x/75)
+                y = int(y/75)
+                self.board_representation[y][x] = piece.name
+        # print(self.board_representation)
