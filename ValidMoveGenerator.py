@@ -237,3 +237,58 @@ def king(cord,board_representation):
             opponents.append([(x-1)*75,(y-1)*75])
 
     return ValidMoves,opponents
+
+def knight(cord,board_representation):
+    x = cord[0]
+    y = cord[1]
+    x = int(x/75)
+    y = int(y/75)
+    ValidMoves = []
+    opponents = []
+    isWhite = board_representation[y][x].isupper()
+
+    if y+1<8 and x+2<8:
+        if board_representation[y+1][x+2] == 0:
+                ValidMoves.append([(x+2)*75,(y+1)*75])
+        elif board_representation[y+1][x+2].isupper() != isWhite:
+            opponents.append([(x+2)*75,(y+1)*75])
+    if y+1<8 and x-2>=0:
+        if board_representation[y+1][x-2] == 0:
+                ValidMoves.append([(x-2)*75,(y+1)*75])
+        elif board_representation[y+1][x-2].isupper() != isWhite:
+            opponents.append([(x-2)*75,(y+1)*75])
+
+    if y-1>=0 and x+2<8:
+        if board_representation[y-1][x+2] == 0:
+                ValidMoves.append([(x+2)*75,(y-1)*75])
+        elif board_representation[y-1][x+2].isupper() != isWhite:
+            opponents.append([(x+2)*75,(y-1)*75])
+    if y-1>=0 and x-2>=0:
+        if board_representation[y-1][x-2] == 0:
+                ValidMoves.append([(x-2)*75,(y-1)*75])
+        elif board_representation[y-1][x-2].isupper() != isWhite:
+            opponents.append([(x-2)*75,(y-1)*75])
+
+    if y+2<8 and x+1<8:
+        if board_representation[y+2][x+1] == 0:
+                ValidMoves.append([(x+1)*75,(y+2)*75])
+        elif board_representation[y+2][x+1].isupper() != isWhite:
+            opponents.append([(x+1)*75,(y+2)*75])
+    if y+2<8 and x-1>=0:
+        if board_representation[y+2][x-1] == 0:
+                ValidMoves.append([(x-1)*75,(y+2)*75])
+        elif board_representation[y+2][x-1].isupper() != isWhite:
+            opponents.append([(x-1)*75,(y+2)*75])
+
+    if y-2>=0 and x+1<8:
+        if board_representation[y-2][x+1] == 0:
+                ValidMoves.append([(x+1)*75,(y-2)*75])
+        elif board_representation[y-2][x+1].isupper() != isWhite:
+            opponents.append([(x+1)*75,(y-2)*75])
+    if y-2>=0 and x-1>=0:
+        if board_representation[y-2][x-1] == 0:
+                ValidMoves.append([(x-1)*75,(y-2)*75])
+        elif board_representation[y-2][x-1].isupper() != isWhite:
+            opponents.append([(x-1)*75,(y-2)*75])
+    
+    return ValidMoves,opponents
