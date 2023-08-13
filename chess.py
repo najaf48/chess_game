@@ -88,7 +88,7 @@ class ChessGame:  #overall class to manage chess game behaviour
                         self.selected_piece = self.pieces.check_collide(self.cord,self.white)
                         if self.selected_piece!=None:
                             self.white = self.selected_piece[1]
-                            if self.selected_piece[0].name=='k'or self.selected_piece[0].name=='K' or self.selected_piece[0].name=='q'or self.selected_piece[0].name=='Q' or  self.selected_piece[0].name=='r' or self.selected_piece[0].name=='R' or self.selected_piece[0].name=='p' or self.selected_piece[0].name=='P' or self.selected_piece[0].name=='b' or self.selected_piece[0].name=='B':
+                            if self.selected_piece[0].name=='n'or self.selected_piece[0].name=='N' or self.selected_piece[0].name=='k'or self.selected_piece[0].name=='K' or self.selected_piece[0].name=='q'or self.selected_piece[0].name=='Q' or  self.selected_piece[0].name=='r' or self.selected_piece[0].name=='R' or self.selected_piece[0].name=='p' or self.selected_piece[0].name=='P' or self.selected_piece[0].name=='b' or self.selected_piece[0].name=='B':
                                 self.validmoves = ValidMoveGenerator.GenerateMove(self.selected_piece[0],self.chess_board.board_representation,self.cord)
                                 if self.validmoves!=None:
                                     self.chess_board.selected_highlight([[x,y]])

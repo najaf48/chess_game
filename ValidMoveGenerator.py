@@ -9,6 +9,8 @@ def GenerateMove(piece,board_representation,cord):
         return queen(cord,board_representation)
     elif piece.name == 'k' or piece.name == 'K':
         return king(cord,board_representation)
+    elif piece.name == 'n' or piece.name == 'N':
+        return knight(cord,board_representation)
     
 
 def pawn(cord,board_representation):
