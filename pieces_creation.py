@@ -27,12 +27,10 @@ class pieces_set:
     def check_collide(self,cord,isWhite):
         if isWhite:
             for piece in self.list_white:
-                for position in piece.locations:
-                    if position == cord:
-                        return piece,not isWhite
+                if cord in piece.locations:
+                    return piece,not isWhite
         else:
             for piece in self.list_black:
-                for position in piece.locations:
-                    if position == cord:
-                        return piece,not isWhite
+                if cord in piece.locations:
+                    return piece,not isWhite
         return None

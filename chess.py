@@ -36,7 +36,6 @@ class ChessGame:  #overall class to manage chess game behaviour
                 if event.button == 1:
                     if self.selected_piece!=None:
                         self.chess_board.drawBoard()
-                        # ValidMoveGenerator.generatemove(self.selected_piece)
                         x = event.pos[0]
                         y = event.pos[1]
                         x = (int(x/75))*75
@@ -59,26 +58,6 @@ class ChessGame:  #overall class to manage chess game behaviour
                             self.selected_piece = None
                             self.white = not self.white
                             break
-                        # self_colliding_piece = self.pieces.check_collide([x,y],self.selected_piece[0].color)
-                        # opposite_colliding_piece = self.pieces.check_collide([x,y],not self.selected_piece[0].color)
-                        # if self_colliding_piece != None:
-                        #     self.selected_piece = None
-                        #     self.white = not self.white
-                        #     break
-                        # elif opposite_colliding_piece != None:
-                        #     self.selected_piece[0].locations.append([x,y])
-                        #     self.selected_piece[0].locations.remove(self.cord)
-                        #     opposite_colliding_piece[0].locations.remove([x,y])
-                        #     self.chess_board.update_board_representation(self.pieces.list_pieces_objects)
-                        #     self.selected_piece = None
-                        #     sounds.capture()
-                        # else:
-                        #     self.selected_piece[0].locations.append([x,y])
-                        #     self.selected_piece[0].locations.remove(self.cord)
-                        #     self.chess_board.update_board_representation(self.pieces.list_pieces_objects)
-                        #     self.selected_piece = None
-                        #     sounds.move()
-
                     elif self.selected_piece == None:
                         x=event.pos[0]
                         y=event.pos[1]
@@ -88,12 +67,11 @@ class ChessGame:  #overall class to manage chess game behaviour
                         self.selected_piece = self.pieces.check_collide(self.cord,self.white)
                         if self.selected_piece!=None:
                             self.white = self.selected_piece[1]
-                            if self.selected_piece[0].name=='n'or self.selected_piece[0].name=='N' or self.selected_piece[0].name=='k'or self.selected_piece[0].name=='K' or self.selected_piece[0].name=='q'or self.selected_piece[0].name=='Q' or  self.selected_piece[0].name=='r' or self.selected_piece[0].name=='R' or self.selected_piece[0].name=='p' or self.selected_piece[0].name=='P' or self.selected_piece[0].name=='b' or self.selected_piece[0].name=='B':
-                                self.validmoves = ValidMoveGenerator.GenerateMove(self.selected_piece[0],self.chess_board.board_representation,self.cord)
-                                if self.validmoves!=None:
-                                    self.chess_board.selected_highlight([[x,y]])
-                                    self.chess_board.selected_highlight(self.validmoves[0])
-                                    self.chess_board.opponent_highlight(self.validmoves[1])
+                            self.validmoves = ValidMoveGenerator.GenerateMove(self.selected_piece[0],self.chess_board.board_representation,self.cord)
+                            if self.validmoves!=None:
+                                self.chess_board.selected_highlight([[x,y]])
+                                self.chess_board.selected_highlight(self.validmoves[0])
+                                self.chess_board.opponent_highlight(self.validmoves[1])
 
     def draw_chess_board(self):
         self.chess_board = Board(self.screen)

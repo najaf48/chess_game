@@ -26,6 +26,7 @@ class Board:
                 x += 75
             x = 0
             y += 75
+
     def cordinates(self):
         self.cord = {}
         x = 0
@@ -82,7 +83,7 @@ class Board:
         s.fill((118, 118, 26))
         for cord in cords:
             self.screen.blit(s,(cord[0],cord[1]))
-            # pygame.draw.rect(self.screen, (118, 118, 26),(cord[0], cord[1], 75, 75))
+
     def opponent_highlight(self,cords):
         s = pygame.Surface((75,75))
         # s.set_alpha(190)
@@ -93,7 +94,7 @@ class Board:
     def update_board_representation(self,list_of_pieces_objects):
         for i in range(8):
             for j in range(8):
-                self.board_representation[i][j]=0
+                self.board_representation[i][j] = 0
         for piece in list_of_pieces_objects:
             for location in piece.locations:
                 x = location[0]
