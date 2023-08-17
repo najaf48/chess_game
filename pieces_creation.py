@@ -34,3 +34,8 @@ class pieces_set:
                 if cord in piece.locations:
                     return piece,not isWhite
         return None
+    
+def which_piece(self,name):
+    for piece in self.list_pieces_objects:
+        if piece.name == name:
+            return piece

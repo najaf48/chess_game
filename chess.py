@@ -5,6 +5,7 @@ from pieces_creation import pieces_set
 from board import Board
 import sounds
 import ValidMoveGenerator
+import GenrateMoves
 
 class ChessGame:  #overall class to manage chess game behaviour
     def __init__(self):
@@ -17,10 +18,17 @@ class ChessGame:  #overall class to manage chess game behaviour
         self.fen_notation = 'rnbkqbnr/pppppppp/////PPPPPPPP/RNBKQBNR'
         self.selected_piece = None
         pygame.display.set_caption('Chess')
-
+        self.draw_chess_board()
+        self.moves = self.generate_moves()
+        
+    def generate_moves(self):
+        q = GenrateMoves.generate_moves_for_player(self.chess_board.board_representation,self.white)
+        # for i in q:
+        #     print(i)
+        # print('\n')
+        return q
     def run_game(self):
         """Start the main loop for the game."""
-        self.draw_chess_board()
         while True:
             self._check_events()
             self._update_screen()
@@ -47,6 +55,7 @@ class ChessGame:  #overall class to manage chess game behaviour
                             self.chess_board.update_board_representation(self.pieces.list_pieces_objects)
                             self.selected_piece = None
                             sounds.move()
+                            self.moves = self.generate_moves()
                         elif [x,y] in self.validmoves[1]:
                             self.selected_piece[0].locations.append([x,y])
                             self.selected_piece[0].locations.remove(self.cord)
@@ -54,6 +63,7 @@ class ChessGame:  #overall class to manage chess game behaviour
                             self.chess_board.update_board_representation(self.pieces.list_pieces_objects)
                             self.selected_piece = None
                             sounds.capture()
+                            self.moves = self.generate_moves()
                         else:
                             self.selected_piece = None
                             self.white = not self.white
@@ -67,7 +77,7 @@ class ChessGame:  #overall class to manage chess game behaviour
                         self.selected_piece = self.pieces.check_collide(self.cord,self.white)
                         if self.selected_piece!=None:
                             self.white = self.selected_piece[1]
-                            self.validmoves = ValidMoveGenerator.GenerateMove(self.selected_piece[0],self.chess_board.board_representation,self.cord)
+                            self.validmoves = self.moves[int((x+(y*8))/75)]
                             if self.validmoves!=None:
                                 self.chess_board.selected_highlight([[x,y]])
                                 self.chess_board.selected_highlight(self.validmoves[0])

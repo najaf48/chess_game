@@ -1,18 +1,21 @@
-def GenerateMove(piece,board_representation,cord):
-    if piece.name=='r' or piece.name=='R':
+def GenerateMove(board_representation,cord):
+    x = cord[0]
+    y = cord[1]
+    x = int(x/75)
+    y = int(y/75)
+    if board_representation[y][x]=='r' or board_representation[y][x]=='R':
         return rook(cord,board_representation)
-    elif piece.name=='p' or piece.name=='P':
+    elif board_representation[y][x]=='p' or board_representation[y][x]=='P':
         return pawn(cord,board_representation)
-    elif piece.name == 'b' or piece.name == 'B':
+    elif board_representation[y][x] == 'b' or board_representation[y][x] == 'B':
         return bishop(cord,board_representation)
-    elif piece.name == 'q' or piece.name == 'Q':
+    elif board_representation[y][x] == 'q' or board_representation[y][x] == 'Q':
         return queen(cord,board_representation)
-    elif piece.name == 'k' or piece.name == 'K':
+    elif board_representation[y][x] == 'k' or board_representation[y][x] == 'K':
         return king(cord,board_representation)
-    elif piece.name == 'n' or piece.name == 'N':
+    elif board_representation[y][x] == 'n' or board_representation[y][x] == 'N':
         return knight(cord,board_representation)
     
-
 def pawn(cord,board_representation):
     x = cord[0]
     y = cord[1]
@@ -220,19 +223,19 @@ def king(cord,board_representation):
         elif board_representation[y+1][x+1].isupper() != isWhite:
             opponents.append([(x+1)*75,(y+1)*75])
 
-    if y+1<8 and x-1>0:
+    if y+1<8 and x-1>=0:
         if board_representation[y+1][x-1] == 0:
             ValidMoves.append([(x-1)*75,(y+1)*75])
         elif board_representation[y+1][x-1].isupper() != isWhite:
             opponents.append([(x-1)*75,(y+1)*75])
 
-    if y-1<8 and x+1<8:
+    if y-1>=0 and x+1<8:
         if board_representation[y-1][x+1] == 0:
             ValidMoves.append([(x+1)*75,(y-1)*75])
         elif board_representation[y-1][x+1].isupper() != isWhite:
             opponents.append([(x+1)*75,(y-1)*75])
 
-    if y-1<8 and x-1>0:
+    if y-1>=0 and x-1>=0:
         if board_representation[y-1][x-1] == 0:
             ValidMoves.append([(x-1)*75,(y-1)*75])
         elif board_representation[y-1][x-1].isupper() != isWhite:
@@ -294,3 +297,6 @@ def knight(cord,board_representation):
             opponents.append([(x-1)*75,(y-2)*75])
     
     return ValidMoves,opponents
+
+def KingTraveller(king):
+    ...
