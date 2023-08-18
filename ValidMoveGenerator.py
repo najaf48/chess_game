@@ -4,23 +4,19 @@ def GenerateMove(board_representation,cord):
     x = int(x/75)
     y = int(y/75)
     if board_representation[y][x]=='r' or board_representation[y][x]=='R':
-        return rook(cord,board_representation)
+        return rook(x,y,board_representation)
     elif board_representation[y][x]=='p' or board_representation[y][x]=='P':
-        return pawn(cord,board_representation)
+        return pawn(x,y,board_representation)
     elif board_representation[y][x] == 'b' or board_representation[y][x] == 'B':
-        return bishop(cord,board_representation)
+        return bishop(x,y,board_representation)
     elif board_representation[y][x] == 'q' or board_representation[y][x] == 'Q':
-        return queen(cord,board_representation)
+        return queen(x,y,board_representation)
     elif board_representation[y][x] == 'k' or board_representation[y][x] == 'K':
-        return king(cord,board_representation)
+        return king(x,y,board_representation)
     elif board_representation[y][x] == 'n' or board_representation[y][x] == 'N':
-        return knight(cord,board_representation)
+        return knight(x,y,board_representation)
     
-def pawn(cord,board_representation):
-    x = cord[0]
-    y = cord[1]
-    x = int(x/75)
-    y = int(y/75)
+def pawn(x,y,board_representation):
     ValidMoves = []
     opponents = []
     isWhite = board_representation[y][x].isupper()
@@ -63,11 +59,7 @@ def pawn(cord,board_representation):
         
     return ValidMoves,opponents
 
-def rook(cord,board_representation):
-    x = cord[0]
-    y = cord[1]
-    x = int(x/75)
-    y = int(y/75)
+def rook(x,y,board_representation):
     isWhite = board_representation[y][x].isupper()
     x1 = x+1
     ValidMoves = []
@@ -117,11 +109,7 @@ def rook(cord,board_representation):
     
     return ValidMoves,opponents
 
-def bishop(cord,board_representation):
-    x = cord[0]
-    y = cord[1]
-    x = int(x/75)
-    y = int(y/75)
+def bishop(x,y,board_representation):
     ValidMoves = []
     opponents = []
     isWhite = board_representation[y][x].isupper()
@@ -181,18 +169,14 @@ def bishop(cord,board_representation):
 
     return ValidMoves,opponents
 
-def queen(cord,board_representation):
-    moves_like_rook = rook(cord,board_representation)
-    moves_like_bishop = bishop(cord,board_representation)
+def queen(x,y,board_representation):
+    moves_like_rook = rook(x,y,board_representation)
+    moves_like_bishop = bishop(x,y,board_representation)
     ValidMoves = moves_like_rook[0]+moves_like_bishop[0]
     opponents = moves_like_rook[1]+moves_like_bishop[1]
     return ValidMoves,opponents
 
-def king(cord,board_representation):
-    x = cord[0]
-    y = cord[1]
-    x = int(x/75)
-    y = int(y/75)
+def king(x,y,board_representation):
     ValidMoves = []
     opponents = []
     isWhite = board_representation[y][x].isupper()
@@ -243,11 +227,7 @@ def king(cord,board_representation):
 
     return ValidMoves,opponents
 
-def knight(cord,board_representation):
-    x = cord[0]
-    y = cord[1]
-    x = int(x/75)
-    y = int(y/75)
+def knight(x,y,board_representation):
     ValidMoves = []
     opponents = []
     isWhite = board_representation[y][x].isupper()

@@ -20,9 +20,6 @@ def generate_moves_for_player(board_representation,isWhite):
             x+=75
         x=0
         y+=75
-    totalposition = len(moves)
-    totalmoves=0
-    print(moves)
     for i in range(len(moves)):
         for j in range(len(moves[i][0])):
             if will_it_kill_king(i,moves[i][0][j],board_representation):
@@ -37,8 +34,16 @@ def generate_moves_for_player(board_representation,isWhite):
         for j in range(len(invalidmoves[i][1])):
             if invalidmoves[i][1][j] in moves[i][1]:
                 moves[i][1].remove(invalidmoves[i][1][j])
-    print(moves)
-    return moves
+    check_mate = True
+    for i in moves:
+        for j in i:
+            for k in j:
+                if k!=[]:
+                    check_mate=False
+    if check_mate:
+        return None
+    else:
+        return moves
 
 def will_it_kill_king(start,stop,board_repr):
     y = int(start/8)
@@ -51,6 +56,8 @@ def will_it_kill_king(start,stop,board_repr):
     kinglocation = whereisKing(iswhite,board_repr)
     board_repr[y][x] = 0
     board_repr[y1][x1] = start_piece
+    if start_piece == 'K' or start_piece == 'k':
+        kinglocation = whereisKing(iswhite,board_repr)
     oppoenent_moves = generate_moves_for_opponenet(board_repr,not iswhite)
     board_repr[y][x] = start_piece
     board_repr[y1][x1] = stop_piece
